@@ -1,9 +1,7 @@
 package me.liuyibao.aop;
 
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 
 /**
  * Created by liuyibao on 2017/10/10.
@@ -11,23 +9,40 @@ import org.aspectj.lang.annotation.Before;
 @Aspect
 public class Audience {
 
-    @Before("execution(* me.liuyibao.aop.Performance.perform(..))")
-    public void silenceCellPhones() {
-        System.out.println("Silencing cell phones");
+    private int counts;
+
+    @Pointcut("execution(* me.liuyibao.aop.Performance.perform(int)) && args(trackNumber)")
+    public void performance(int trackNumber) {}
+
+    @Before("performance(trackNumber)")
+    public void silenceCellPhones(int trackNumber) {
+        counts += trackNumber;
+        System.out.println("Silencing cell phones " + counts);
     }
 
-    @Before("execution(* me.liuyibao.aop.Performance.perform(..))")
-    public void takeSeats() {
+    @Before("performance(trackNumber)")
+    public void takeSeats(int trackNumber) {
         System.out.println("Taking seats");
     }
 
-    @AfterReturning("execution(* me.liuyibao.aop.Performance.perform(..))")
-    public void applause() {
+    @AfterReturning("performance(trackNumber)")
+    public void applause(int trackNumber) {
         System.out.println("CLAP CLAP CLAP!!!");
     }
 
-    @AfterThrowing("execution(* me.liuyibao.aop.Performance.perform(..))")
-    public void demandRefund() {
+    @AfterThrowing("performance(trackNumber)")
+    public void demandRefund(int trackNumber) {
         System.out.println("Demanding a refund");
+    }
+
+    @Around("performance(trackNumber)")
+    public void watchPerformance(ProceedingJoinPoint jp, int trackNumber) {
+        try {
+            counts += trackNumber;
+            System.out.println("Silencing cell phones " + counts);
+            jp.proceed();
+        } catch (Throwable e) {
+            System.out.println("Demanding a refund");
+        }
     }
 }
