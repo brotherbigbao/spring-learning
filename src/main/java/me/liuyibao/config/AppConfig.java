@@ -1,22 +1,22 @@
 package me.liuyibao.config;
 
-import me.liuyibao.aop.Audience;
-import me.liuyibao.aop.MoviePerformance;
-import me.liuyibao.aop.Performance;
+import me.liuyibao.jdbc.JdbcTaskRepository;
 import me.liuyibao.service.CompactDisc;
 import me.liuyibao.service.impl.SqtPeppers;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
 
 /**
  * Created by liuyibao on 2017/10/10.
  */
 @Configuration
+@ComponentScan(basePackages = {"me.liuyibao"})
 @PropertySource("app.properties")
 @EnableAspectJAutoProxy
 public class AppConfig {
@@ -30,12 +30,17 @@ public class AppConfig {
     }
 
     @Bean
-    public Performance performance() {
-        return new MoviePerformance();
+    public DataSource dataSource() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUrl("jdbc:mysql://10.209.44.12:10043/opads");
+        ds.setUsername("opads");
+        ds.setPassword("opads");
+        return ds;
     }
 
     @Bean
-    public Audience audience() {
-        return new Audience();
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 }

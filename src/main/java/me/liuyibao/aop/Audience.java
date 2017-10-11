@@ -2,11 +2,13 @@ package me.liuyibao.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by liuyibao on 2017/10/10.
  */
 @Aspect
+@Component
 public class Audience {
 
     private int counts;
