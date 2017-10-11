@@ -1,12 +1,10 @@
 package me.liuyibao.config;
 
-import me.liuyibao.jdbc.JdbcTaskRepository;
 import me.liuyibao.service.CompactDisc;
 import me.liuyibao.service.impl.SqtPeppers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 

@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
-public class TestJdbcTaskRepository {
+public class TestTaskRepository {
 
     @Autowired
     private TaskRepository taskRepository;
