@@ -1,5 +1,6 @@
 package me.liuyibao.config;
 
+import me.liuyibao.profile.Animal;
 import me.liuyibao.service.CompactDisc;
 import me.liuyibao.service.impl.SqtPeppers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,23 @@ public class AppConfig {
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
+    }
+
+    @Bean
+    @Profile("sit")
+    public Animal animalDog() {
+        return new Animal("sit is dog");
+    }
+
+    @Bean
+    @Profile("uat")
+    public Animal animalCat() {
+        return new Animal("uat is cat");
+    }
+
+    @Bean
+    @Profile("prod")
+    public Animal animalHorse() {
+        return new Animal("prod is horse");
     }
 }
