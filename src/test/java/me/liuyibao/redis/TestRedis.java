@@ -41,12 +41,21 @@ public class TestRedis {
     @Test
     public void testTemplate() {
         Task task = new Task(1L, 200343L, 188L, "title");
-        redis.opsForValue().set(task.getTitle(), task);
-        Object result = (Task)redis.opsForValue().get("title");
-        System.out.println(result);
-        //redis.opsForValue().set("name", "liuyibao");
-        //String name = (String)redis.opsForValue().get("name");
-        //System.out.println(name);
+        System.out.println(task);
+        //redis.opsForValue().set(task.getTitle(), task);
+        //Object result = (Task)redis.opsForValue().get("title");
+        //System.out.println(result);
+
+
+        //redis.opsForList().rightPush("cart", task);
+        //redis.opsForList().rightPush("cart", task);
+        //Task taskGet = (Task)redis.opsForList().leftPop("cart");
+        //System.out.println(taskGet);
+
+        redis.opsForSet().add("set", task);
+        redis.opsForSet().add("set", task);
+        redis.opsForSet().add("set", task);
+        redis.opsForSet().add("set", task);
 
     }
 }

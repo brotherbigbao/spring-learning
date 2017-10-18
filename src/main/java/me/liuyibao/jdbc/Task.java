@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by liuyibao on 2017/10/11.
  */
-public class Task implements Serializable{
+public class Task implements Serializable ,Comparable<Task>{
 
     private Long id;
 
@@ -52,5 +52,10 @@ public class Task implements Serializable{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public int compareTo(Task task) {
+        return this.id.intValue();
     }
 }
