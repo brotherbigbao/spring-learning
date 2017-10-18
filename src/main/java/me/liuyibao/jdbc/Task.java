@@ -1,9 +1,11 @@
 package me.liuyibao.jdbc;
 
+import java.io.Serializable;
+
 /**
  * Created by liuyibao on 2017/10/11.
  */
-public class Task {
+public class Task implements Serializable{
 
     private Long id;
 

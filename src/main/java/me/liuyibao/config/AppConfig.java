@@ -1,11 +1,17 @@
 package me.liuyibao.config;
 
+import me.liuyibao.jdbc.Task;
 import me.liuyibao.profile.Animal;
 import me.liuyibao.service.CompactDisc;
 import me.liuyibao.service.impl.SqtPeppers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -59,5 +65,21 @@ public class AppConfig {
     @Profile("prod")
     public Animal animalHorse() {
         return new Animal("prod is horse");
+    }
+
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        return new JedisConnectionFactory();
+    }
+
+    @Bean
+    public RedisTemplate<String, Task> redisTemplate(RedisConnectionFactory cf) {
+        RedisTemplate<String, Task> redis = new RedisTemplate<String, Task>();
+        redis.setConnectionFactory(cf);
+
+        RedisSerializer stringSerializer = new StringRedisSerializer();
+        redis.setKeySerializer(stringSerializer);
+        //redis.setValueSerializer(stringSerializer);
+        return redis;
     }
 }
